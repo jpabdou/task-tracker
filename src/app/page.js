@@ -10,7 +10,7 @@ export default async function Home() {
       <br/>
       <h1>Either click on:</h1>
         <ul>
-          <li>• "Task List" link to view and modify tasks</li>
+          <li>• &ldquo;Task List&rdquo; link to view and modify tasks</li>
           <li>• Button to log out or manage account</li>
         </ul> 
     </main>
