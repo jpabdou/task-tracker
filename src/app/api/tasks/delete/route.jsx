@@ -3,8 +3,6 @@ import { NextResponse, NextRequest } from 'next/server';
 import {ObjectId} from "mongodb";
 import { getAuth } from "@clerk/nextjs/server";
 
-const ObjectId = ObjectId;
-
 export async function DELETE(request) {
     if (request.method === 'DELETE') {
     try {
