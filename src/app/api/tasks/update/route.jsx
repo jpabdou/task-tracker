@@ -12,7 +12,7 @@ export async function PUT(request) {
         const client = await clientPromise;
       let db_connect = client.db("tasks");
       const { searchParams } = new URL(request.url);
-      let userId = searchParams.get("id") || "";
+      const {userId} = getAuth(request).split("_")[1]
       let taskId = searchParams.get("taskId") || "";
 
       let myquery = { "userId": userId,

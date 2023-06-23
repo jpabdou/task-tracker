@@ -4,6 +4,7 @@ import DeleteButton from "./DeleteButton";
 import { useAuth } from '@clerk/nextjs'
 import { UserContext } from "../../../contexts/user.context";
 import { Radio, RadioGroup, FormControl, FormControlLabel, FormLabel } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 export default function TaskForm(props) {
     const {
@@ -14,7 +15,7 @@ export default function TaskForm(props) {
 
     const currentDate = new Date().toJSON().slice(0,10);
     const { setAlertMessage } = useContext(UserContext);
-
+    const router = useRouter();
     let {editTask, taskId, tasks, setTasks, setVis, setEditTask, setTaskId} = props;
     let initialTaskInput ={title: "", taskNumber: tasks.length, description: "", dueDate: currentDate, status: "Not Started Yet"};
     if (taskId)  {
@@ -41,11 +42,11 @@ export default function TaskForm(props) {
         }
         const updateReq = {
             "method": "PUT",
-            "body": JSON.stringify({...task, userId: user?.id}),
+            "body": JSON.stringify({...task}),
             'Content-Type': 'application/json',
         };
         try {
-            let url = `/api/tasks/update?id=${userId}&taskId=${taskId}`
+            let url = `/api/tasks/update?taskId=${taskId}`
 
           const response = await fetch(url, updateReq);
           let task = await response.json();
@@ -65,11 +66,11 @@ export default function TaskForm(props) {
         }
         const postReq = {
             "method": "POST",
-            "body": JSON.stringify({...task, userId: user?.id}),
+            "body": JSON.stringify({...task}),
             "Content-type": "application/json",
           };
         try {
-          const response = await fetch(`/api/tasks/create?id=${userId}&`, postReq);
+          const response = await fetch(`/api/tasks/create`, postReq);
           let result = await response.json();
           return result;
         } catch (error) {
@@ -101,6 +102,7 @@ export default function TaskForm(props) {
 
             } else {
                 postTask(task).then(res=>{
+                    console.log(res)
                     tasks.push({...task, _id: res.data.insertedId, id: res.data.insertedId.toString()});
                     setTasks([...tasks]);
                     setTask(initialTaskInput);
@@ -112,6 +114,7 @@ export default function TaskForm(props) {
 
             }
             setHighlightOn(false);
+            router.refresh();
         }
 
     }
@@ -196,8 +199,9 @@ export default function TaskForm(props) {
                             name="status"
                             value={task.status}
                             onChange={handleChangeInput}
+                            style={{width: '200px', alignSelf: 'center'}}
                         >
-                            {statusArr.map(ele, idx=>{
+                            {statusArr.map((ele, idx)=>{
                                 return(<FormControlLabel key={idx} value={ele} control={<Radio />} label={ele} />)
                             })}
                             

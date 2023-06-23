@@ -29,7 +29,7 @@ export default function Page() {
                 "method": "GET",
                 "Content-type": "application/json",
               };
-            let url = `/api/tasks/read?id=${userId.split('_')[1]}`
+            let url = `/api/tasks/read`
             const res = await fetch(`${url}`, getReq);
             if (!(res.status === 200)) {
               setAlertMessage({message: "Failed to fetch data.", severity: "error"})
@@ -75,7 +75,7 @@ export default function Page() {
     }
     return(
         <div className="flex flex-col flex-wrap align-evenly justify-evenly">
-        <button className={buttonSetting} onClick={()=>{setVis(true)}}>Add a New Task</button>
+        <button className={buttonSetting} onClick={()=>{setVis(!(vis))}}>Add a New Task</button>
         {vis && <TaskForm editTask={editTask} taskId={taskId} setTaskId={setTaskId} setVis={setVis} setEditTask={setEditTask} tasks={tasks} setTasks ={setTasks} />}            
         <TaskList tasks={tasks} setEditTask={setEditTask} setTaskId={setTaskId} setVis={setVis} />
         </div>

@@ -6,10 +6,11 @@ import { getAuth } from "@clerk/nextjs/server";
 export async function GET(request) {
     if (request.method === 'GET') {
     try {
+        const {userId} = getAuth(request).split("_")[1]
       const client = await clientPromise;
       let db_connect = client.db("tasks");
       const { searchParams } = new URL(request.url);
-      let userId = searchParams.get("id") || "";
+    //   let userId = searchParams.get("id") || "";
 
       let taskId = searchParams.get("taskId") || "";
       if (taskId.length>0) {     

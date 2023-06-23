@@ -32,7 +32,7 @@ export default function TaskRow(props) {
                 setTaskId(task.id);
                 setEditTask(task);
             }}>{task.title}</button></TableCell>
-            <TableCell align="center" sx={{fontSize: 18}}>{task.dateApplied}</TableCell>
+            <TableCell align="center" sx={{fontSize: 18}}>{task.dueDate}</TableCell>
             <TableCell align="center" sx={{fontSize: 18}}>{task.description}</TableCell>
             <TableCell align="center" sx={{fontSize: 18}}>{task.status}</TableCell>
            </TableRow>

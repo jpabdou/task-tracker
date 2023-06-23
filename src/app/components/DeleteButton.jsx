@@ -15,10 +15,9 @@ export default function DeleteButton(props) {
         const deleteReq = {
             "method": "DELETE",
             'Content-Type': 'application/json',
-            "headers": {"Authentication": `Bearer ${token}`}
         };
         try {
-            let url  =  `/api/tasks/delete?id=${userId}&taskid=${taskId}`
+            let url  =  `/api/tasks/delete?taskid=${taskId}`
           const response = await fetch(`${url}`, deleteReq);
           let task = await response.json();
           return task;

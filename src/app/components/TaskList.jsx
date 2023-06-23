@@ -47,7 +47,8 @@ export default function TaskList(props) {
 
     const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tasks.length) : 0;
-
+    
+      useEffect(()=>{setFilteredtasks(tasks)},[tasks])
   const visibleRows = React.useMemo(
     () =>{
       return filteredtasks
