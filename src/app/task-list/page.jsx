@@ -9,6 +9,7 @@ import { useAuth } from "@clerk/nextjs";
 export default function Page() {
     const {
         isSignedIn,
+        userId
       } = useAuth();
 
     const [hasMounted, setHasMounted] = useState(false);
@@ -28,7 +29,7 @@ export default function Page() {
                 "method": "GET",
                 "Content-type": "application/json",
               };
-            let url = `/api/tasks/read`
+            let url = `/api/tasks/read?id=${userId.split('_')[1]}`
             const res = await fetch(`${url}`, getReq);
             if (!(res.status === 200)) {
               setAlertMessage({message: "Failed to fetch data.", severity: "error"})
@@ -48,6 +49,7 @@ export default function Page() {
         if (tasks.length === 0) {
           if (isSignedIn){
             getTasks().then(result=>{
+                console.log(result)
               if (result.data.length === 0) {
                 setVis(true);
                 setAlertMessage({message: "No tasks found. Submit a task first.", severity: "error"});

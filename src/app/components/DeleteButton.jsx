@@ -3,11 +3,12 @@
 import { useContext, useState } from 'react';
 import { UserContext } from '../../../contexts/user.context';
 import { Dialog, DialogActions, DialogContent, DialogTitle,DialogContentText, Button } from '@mui/material';
-
+import { useAuth } from '@clerk/nextjs';
 
 export default function DeleteButton(props) {
     const {setAlertMessage} = useContext(UserContext);
     const {taskId, buttonSetting} = props;
+    const {userId} = useAuth();
     const [opened, setOpened] = useState(false);
 
     const deleteTask = async (taskId) => {
@@ -17,7 +18,7 @@ export default function DeleteButton(props) {
             "headers": {"Authentication": `Bearer ${token}`}
         };
         try {
-            let url  =  `/api/tasks/delete?taskid=${taskId}`
+            let url  =  `/api/tasks/delete?id=${userId}&taskid=${taskId}`
           const response = await fetch(`${url}`, deleteReq);
           let task = await response.json();
           return task;

@@ -8,7 +8,7 @@ export default function TaskRow(props) {
     const currentDate = new Date().toJSON().slice(0,10);
 
     let { idx, task, setTaskId, setEditTask, setVis} = props;
-    let initialTaskInput ={title: "", taskNumber: taskNumbers.length, description: "", dueDate: currentDate, status: "Not Started Yet", id: ""};
+    let initialTaskInput ={title: "", taskNumber: 0, description: "", dueDate: currentDate, status: "Not Started Yet", id: ""};
     initialTaskInput = task;
     
     const buttonSetting = "m-auto w-auto rounded-md border-2 p-3 border-black object-left bg-lime-700 text-white hover:bg-lime-200 hover:text-black";

@@ -7,6 +7,7 @@ import { Radio, RadioGroup, FormControl, FormControlLabel, FormLabel } from "@mu
 
 export default function TaskForm(props) {
     const {
+        userId,
         isLoaded,
         isSignedIn,
       } = useAuth();
@@ -15,7 +16,7 @@ export default function TaskForm(props) {
     const { setAlertMessage } = useContext(UserContext);
 
     let {editTask, taskId, tasks, setTasks, setVis, setEditTask, setTaskId} = props;
-    let initialTaskInput ={title: "", taskNumber: taskNumbers.length, description: "", dueDate: currentDate, status: "Not Started Yet"};
+    let initialTaskInput ={title: "", taskNumber: tasks.length, description: "", dueDate: currentDate, status: "Not Started Yet"};
     if (taskId)  {
         initialTaskInput = editTask;
     };
@@ -40,11 +41,11 @@ export default function TaskForm(props) {
         }
         const updateReq = {
             "method": "PUT",
-            "body": JSON.stringify({...task, user_id: user?.id}),
+            "body": JSON.stringify({...task, userId: user?.id}),
             'Content-Type': 'application/json',
         };
         try {
-            let url = `/api/tasks/update?taskId=${taskId}`
+            let url = `/api/tasks/update?id=${userId}&taskId=${taskId}`
 
           const response = await fetch(url, updateReq);
           let task = await response.json();
@@ -64,11 +65,11 @@ export default function TaskForm(props) {
         }
         const postReq = {
             "method": "POST",
-            "body": JSON.stringify({...task, user_id: user?.id}),
+            "body": JSON.stringify({...task, userId: user?.id}),
             "Content-type": "application/json",
           };
         try {
-          const response = await fetch(`/api/tasks/create`, postReq);
+          const response = await fetch(`/api/tasks/create?id=${userId}&`, postReq);
           let result = await response.json();
           return result;
         } catch (error) {

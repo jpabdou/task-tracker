@@ -12,9 +12,9 @@ export async function PUT(request) {
         const client = await clientPromise;
       let db_connect = client.db("tasks");
       const { searchParams } = new URL(request.url);
-      const { userId } = getAuth(req);
+      let userId = searchParams.get("id") || "";
       let taskId = searchParams.get("taskId") || "";
-      
+
       let myquery = { "userId": userId,
         "_id": new ObjectId(taskId) };
       let newvalues = {

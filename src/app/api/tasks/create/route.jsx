@@ -1,6 +1,5 @@
 import clientPromise from "../../../../../lib/mongodb";
 import { NextResponse } from "next/server";
-import { getAuth } from "@clerk/nextjs/server";
 
 export async function POST(request){
     if (request.method === 'POST') {
@@ -9,7 +8,7 @@ export async function POST(request){
             const client = await clientPromise;
             let db_connect = client.db("tasks");
 
-            const { userId } = getAuth(req);
+            let userId  = searchParams.get("id") || "";
             let myobj = {
                 "title": body.title ? body.title : "No Title Added",
                 "description": body.description ? body.description  : "No Description Added",
