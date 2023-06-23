@@ -1,5 +1,8 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
+import { ClerkProvider } from '@clerk/nextjs'
+import NavBar from './components/NavBar'
+import { UserProvider } from '../../contexts/user.context'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -10,8 +13,17 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <ClerkProvider>
+      <UserProvider>
+      <html lang="en">
+        <body className={inter.className}>
+        <div className="min-h-screen bg-gradient-to-b from-indigo-300 from-10% to-70%">
+        <NavBar/>
+        {children}
+        </div>
+        </body>
+      </html>
+      </UserProvider>
+    </ClerkProvider>
   )
 }
